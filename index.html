@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uzum Market — Интернет-магазин широкого ассортимента</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%237000FF'/><circle cx='38' cy='40' r='14' fill='%23FFFFFF'/><circle cx='62' cy='40' r='14' fill='%23FFFFFF'/><circle cx='50' cy='62' r='14' fill='%23FFFFFF'/><circle cx='38' cy='74' r='8' fill='%23FFFFFF'/><circle cx='62' cy='74' r='8' fill='%23FFFFFF'/></svg>">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== ВЕРХНЯЯ СЕРВИСНАЯ ПАНЕЛЬ ==================== -->
+  <header class="site-header">
+    <div class="top-bar">
+      <div class="container top-bar__inner">
+        <div class="top-bar__left">
+          <!-- Выбор города -->
+          <button class="top-bar__btn" id="city-selector-btn" title="Выбрать город">
+            <i class="fa-solid fa-location-dot"></i>
+            <span data-i18n="city">Город</span>: <strong id="current-city-name">Ташкент</strong>
+            <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 2px;"></i>
+          </button>
+          <div class="top-bar__divider"></div>
+          <!-- Пункты выдачи / доставка -->
+          <div class="top-bar__item top-bar__delivery-badge">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span data-i18n="delivery_fast">Доставим за 1 день!</span>
+          </div>
+        </div>
+
+        <div class="top-bar__right">
+          <!-- Вопрос-ответ -->
+          <a href="#faq" class="top-bar__link" id="faq-link" data-i18n="help">Вопрос-ответ</a>
+          <!-- Мои заказы -->
+          <a href="#orders" class="top-bar__link" id="my-orders-link" data-i18n="my_orders">Мои заказы</a>
+          
+          <div class="top-bar__divider"></div>
+          
+          <!-- Переключатель языка -->
+          <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="ru">Рус</button>
+            <span class="lang-slash">/</span>
+            <button class="lang-btn" data-lang="uz">O'z</button>
+          </div>
+
+          <div class="top-bar__divider"></div>
+
+          <!-- Переключатель темы (Светлая / Тёмная) -->
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Сменить тему оформления">
+            <i class="fa-solid fa-moon"></i>
+            <span class="theme-name">Темная</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ОСНОВНОЙ ХЕДЕР ==================== -->
+    <div class="main-header">
+      <div class="container main-header__inner">
+        <!-- Логотип Uzum Market -->
+        <a href="#" class="brand-logo" id="logo-home-link" title="Uzum Market Главная">
+          <div class="brand-logo__symbol">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="10" fill="#7000FF"/>
+              <circle cx="13" cy="14" r="5" fill="#FFFFFF"/>
+              <circle cx="23" cy="14" r="5" fill="#FFFFFF"/>
+              <circle cx="18" cy="22" r="5" fill="#FFFFFF"/>
+              <circle cx="14" cy="27" r="3" fill="#FFFFFF"/>
+              <circle cx="22" cy="27" r="3" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="brand-logo__text">
+            <span class="brand-logo__title">uzum<span class="brand-logo__accent">market</span></span>
+            <span class="brand-logo__subtitle">маркетплейс удобных покупок</span>
+          </div>
+        </a>
+
+        <!-- Кнопка «Каталог» -->
+        <button class="catalog-btn" id="catalog-toggle-btn">
+          <div class="catalog-btn__burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span data-i18n="catalog">Каталог</span>
+        </button>
+
+        <!-- Поисковая строка -->
+        <div class="search-box">
+          <form class="search-form" id="search-form" onsubmit="event.preventDefault();">
+            <input 
+              type="text" 
+              class="search-input" 
+              id="search-input" 
+              placeholder="Искать товары, бренды и категории..." 
+              autocomplete="off"
+              data-i18n-placeholder="search_placeholder"
+            >
+            <button type="button" class="search-clear-btn" id="search-clear-btn" title="Очистить поиск">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button type="submit" class="search-submit-btn" id="search-submit-btn" title="Найти">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+
+          <!-- Выпадающий список живого поиска -->
+          <div class="search-dropdown" id="search-dropdown">
+            <div class="search-dropdown__header">
+              <span>Результаты поиска</span>
+              <span class="search-results-count" id="search-results-count">0 товаров</span>
+            </div>
+            <div class="search-dropdown__list" id="search-dropdown-list">
+              <!-- Карточки автодополнения генерируются через JS -->
+            </div>
+            <div class="search-dropdown__empty" id="search-dropdown-empty">
+              <i class="fa-solid fa-box-open"></i>
+              <p>По вашему запросу ничего не найдено</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Кнопки действий (Профиль, Избранное, Корзина) -->
+        <div class="header-actions">
+          <!-- Войти / Профиль -->
+          <button class="header-action-btn" id="auth-btn">
+            <div class="header-action-btn__icon">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="header-action-btn__label" id="auth-label" data-i18n="login">Войти</span>
+          </button>
+
+          <!-- Избранное -->
+          <button class="header-action-btn" id="favorites-btn">
+            <div class="header-action-btn__icon">
+              <i class="fa-regular fa-heart"></i>
+              <span class="action-badge" id="favorites-badge">0</span>
+            </div>
+            <span class="header-action-btn__label" data-i18n="favorites">Избранное</span>
+          </button>
+
+          <!-- Корзина -->
+          <button class="header-action-btn header-action-btn--cart" id="cart-btn">
+            <div class="header-action-btn__icon">
+              <i class="fa-solid fa-basket-shopping"></i>
+              <span class="action-badge" id="cart-badge">0</span>
+            </div>
+            <div class="header-cart-info">
+              <span class="header-action-btn__label" data-i18n="cart">Корзина</span>
+              <span class="header-cart-total" id="header-cart-total">0 сум</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== НАВИГАЦИЯ ПО КАТЕГОРИЯМ ==================== -->
+    <nav class="categories-nav">
+      <div class="container">
+        <ul class="categories-nav__list" id="quick-categories-list">
+          <!-- Заполняется динамически из JS -->
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==================== МЕГА-МЕНЮ КАТАЛОГА ==================== -->
+  <div class="catalog-mega-menu" id="catalog-mega-menu">
+    <div class="container catalog-mega-menu__container">
+      <div class="catalog-mega-menu__sidebar" id="mega-menu-categories">
+        <!-- Список категорий -->
+      </div>
+      <div class="catalog-mega-menu__content" id="mega-menu-content">
+        <!-- Подкатегории выбранной категории -->
+      </div>
+    </div>
+  </div>
+  <div class="catalog-backdrop" id="catalog-backdrop"></div>
+
+  <!-- ==================== ОСНОВНОЙ КОНТЕНТ ==================== -->
+  <main class="site-main">
+
+    <!-- СЕКЦИЯ: ГЛАВНЫЙ БАННЕР СЛАЙДЕР -->
+    <section class="hero-slider-section">
+      <div class="container">
+        <div class="hero-slider" id="hero-slider">
+          <div class="hero-slider__track" id="hero-slider-track">
+            
+            <!-- Слайд 1 -->
+            <div class="hero-slide hero-slide--purple">
+              <div class="hero-slide__content">
+                <span class="hero-slide__tag"><i class="fa-solid fa-bolt"></i> Грандиозная распродажа</span>
+                <h1 class="hero-slide__title">Электроника и гаджеты со скидками до 50%</h1>
+                <p class="hero-slide__desc">Флагманские смартфоны, ноутбуки и наушники в рассрочку Uzum Nasiya 0-0-12 без переплат с доставкой за 1 день!</p>
+                <div class="hero-slide__actions">
+                  <a href="#all-products-section" class="btn btn-white hero-slide__btn" onclick="filterByCategory('smartphones')">
+                    <span data-i18n="go_shopping">К покупкам</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                  <span class="hero-slide__badge-delivery"><i class="fa-solid fa-check"></i> Гарантия оригинала</span>
+                </div>
+              </div>
+              <div class="hero-slide__visual">
+                <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=700&q=80" alt="Смартфоны" class="hero-slide__img">
+              </div>
+            </div>
+
+            <!-- Слайд 2 -->
+            <div class="hero-slide hero-slide--dark">
+              <div class="hero-slide__content">
+                <span class="hero-slide__tag"><i class="fa-solid fa-house"></i> Уютный дом</span>
+                <h2 class="hero-slide__title">Умная техника и мебель для вашей квартиры</h2>
+                <p class="hero-slide__desc">Роботы-пылесосы, кофемашины De'Longhi и стильные кресла по специальным ценам этой недели.</p>
+                <div class="hero-slide__actions">
+                  <a href="#all-products-section" class="btn btn-primary hero-slide__btn" onclick="filterByCategory('appliances')">
+                    <span data-i18n="go_shopping">К покупкам</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="hero-slide__visual">
+                <img src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=700&q=80" alt="Бытовая техника" class="hero-slide__img">
+              </div>
+            </div>
+
+            <!-- Слайд 3 -->
+            <div class="hero-slide hero-slide--gradient">
+              <div class="hero-slide__content">
+                <span class="hero-slide__tag"><i class="fa-solid fa-sparkles"></i> Сезонные новинки</span>
+                <h2 class="hero-slide__title">Стильная одежда и культовые кроссовки</h2>
+                <p class="hero-slide__desc">Nike, Adidas, базовые худи оверсайз и парфюмерия мировых домов Chanel, Dior и Tom Ford.</p>
+                <div class="hero-slide__actions">
+                  <a href="#all-products-section" class="btn btn-white hero-slide__btn" onclick="filterByCategory('shoes')">
+                    <span data-i18n="go_shopping">К покупкам</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="hero-slide__visual">
+                <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80" alt="Кроссовки и одежда" class="hero-slide__img">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Стрелки слайдера -->
+          <button class="hero-slider__arrow hero-slider__arrow--prev" id="slider-prev-btn" title="Предыдущий слайд">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="hero-slider__arrow hero-slider__arrow--next" id="slider-next-btn" title="Следующий слайд">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <!-- Индикаторы слайдов -->
+          <div class="hero-slider__dots" id="hero-slider-dots">
+            <button class="dot active" data-slide="0"></button>
+            <button class="dot" data-slide="1"></button>
+            <button class="dot" data-slide="2"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: СКИДКИ ДНЯ (С ЖИВЫМ ТАЙМЕРОМ) -->
+    <section class="section section--day-deals" id="day-deals-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__left">
+            <div class="deals-badge">
+              <i class="fa-solid fa-fire-flame-curved"></i>
+            </div>
+            <h2 class="section-title" data-i18n="day_deals">Скидки дня</h2>
+            <div class="countdown-timer" id="deals-countdown">
+              <span class="countdown-timer__label" data-i18n="deals_countdown">До конца акции:</span>
+              <div class="countdown-timer__boxes">
+                <span class="timer-box" id="timer-hours">14</span>
+                <span class="timer-colon">:</span>
+                <span class="timer-box" id="timer-minutes">36</span>
+                <span class="timer-colon">:</span>
+                <span class="timer-box" id="timer-seconds">52</span>
+              </div>
+            </div>
+          </div>
+          <div class="section-header__right">
+            <button class="scroll-arrow-btn" onclick="scrollContainer('day-deals-scroll', -1)">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="scroll-arrow-btn" onclick="scrollContainer('day-deals-scroll', 1)">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="horizontal-scroll-container" id="day-deals-scroll">
+          <div class="products-grid products-grid--carousel" id="day-deals-products">
+            <!-- Заполняется из JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: ПОПУЛЯРНЫЕ КАТЕГОРИИ -->
+    <section class="section section--categories" id="popular-categories-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="popular_categories">Популярные категории</h2>
+        </div>
+        <div class="categories-grid" id="popular-categories-grid">
+          <!-- Карточки категорий генерируются из JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: ХИТЫ ПРОДАЖ -->
+    <section class="section section--bestsellers" id="bestsellers-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="section-badge section-badge--purple"><i class="fa-solid fa-crown"></i> Топ выбор</span>
+            <h2 class="section-title" data-i18n="bestsellers">Хиты продаж</h2>
+          </div>
+          <div class="section-header__right">
+            <button class="scroll-arrow-btn" onclick="scrollContainer('bestsellers-scroll', -1)">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="scroll-arrow-btn" onclick="scrollContainer('bestsellers-scroll', 1)">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="horizontal-scroll-container" id="bestsellers-scroll">
+          <div class="products-grid products-grid--carousel" id="bestsellers-products">
+            <!-- Заполняется из JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: ВСЕ ТОВАРЫ КАТАЛОГА С ФИЛЬТРАМИ И СОРТИРОВКОЙ -->
+    <section class="section section--catalog" id="all-products-section">
+      <div class="container">
+        <div class="section-header catalog-header">
+          <div>
+            <h2 class="section-title" data-i18n="all_products">Все товары каталога</h2>
+            <p class="section-subtitle">Более <span id="total-products-counter">50</span> качественных товаров с официальной гарантией</p>
+          </div>
+          
+          <!-- Сортировка -->
+          <div class="sort-wrapper">
+            <label for="sort-select" class="sort-label">
+              <i class="fa-solid fa-arrow-down-wide-short"></i>
+              <span data-i18n="sort_by">Сортировка:</span>
+            </label>
+            <select class="sort-select" id="sort-select">
+              <option value="popular" data-i18n="sort_popular">По популярности</option>
+              <option value="cheap" data-i18n="sort_cheap">Сначала дешевые</option>
+              <option value="expensive" data-i18n="sort_expensive">Сначала дорогие</option>
+              <option value="rating" data-i18n="sort_rating">По рейтингу</option>
+              <option value="discount" data-i18n="sort_discount">По размеру скидки</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Панель быстрых категорий-таблеток (Pills) -->
+        <div class="category-pills-bar" id="category-pills">
+          <!-- Генерируется из JS -->
+        </div>
+
+        <div class="catalog-layout">
+          <!-- Боковая панель фильтров -->
+          <aside class="filters-sidebar" id="filters-sidebar">
+            <div class="filters-card">
+              <div class="filters-card__header">
+                <h3 class="filters-card__title">
+                  <i class="fa-solid fa-sliders"></i>
+                  <span data-i18n="filters">Фильтры</span>
+                </h3>
+                <button class="filters-reset-btn" id="filters-reset-btn">Сбросить</button>
+              </div>
+
+              <!-- Фильтр по категории -->
+              <div class="filter-group">
+                <h4 class="filter-group__title" data-i18n="category_label">Категория</h4>
+                <div class="filter-categories-list" id="filter-categories-radio">
+                  <!-- Чекбоксы/радио категорий -->
+                </div>
+              </div>
+
+              <!-- Фильтр по цене -->
+              <div class="filter-group">
+                <h4 class="filter-group__title" data-i18n="price_range">Цена (сум)</h4>
+                <div class="price-inputs-row">
+                  <div class="price-input-wrapper">
+                    <span class="price-prefix" data-i18n="from">от</span>
+                    <input type="number" id="price-min-input" placeholder="0" min="0" step="10000">
+                  </div>
+                  <div class="price-input-wrapper">
+                    <span class="price-prefix" data-i18n="to">до</span>
+                    <input type="number" id="price-max-input" placeholder="35 000 000" min="0" step="50000">
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm btn-block" id="apply-price-filter-btn" style="margin-top: 10px;">Применить цену</button>
+              </div>
+
+              <!-- Переключатель: только со скидкой -->
+              <div class="filter-group">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="filter-discount-only">
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-text" data-i18n="only_discount">Только со скидкой</span>
+                </label>
+              </div>
+
+              <!-- Фильтр по рейтингу -->
+              <div class="filter-group">
+                <h4 class="filter-group__title">Рейтинг товара</h4>
+                <div class="rating-filter-options">
+                  <label class="custom-radio">
+                    <input type="radio" name="rating-filter" value="0" checked>
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Все оценки</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="rating-filter" value="4.8">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">★ 4.8 и выше</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="rating-filter" value="4.5">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">★ 4.5 и выше</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Быстрый баннер рассрочки -->
+              <div class="filter-promo-banner">
+                <div class="filter-promo-banner__badge">Uzum Nasiya</div>
+                <div class="filter-promo-banner__title">0% взнос до 12 мес.</div>
+                <div class="filter-promo-banner__text">Одобрение онлайн за 1 минуту прямо в паспорте!</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Основная сетка товаров -->
+          <div class="catalog-content">
+            <!-- Активные плашки фильтров -->
+            <div class="active-filters-bar" id="active-filters-bar"></div>
+
+            <!-- Сетка карточек -->
+            <div class="products-grid" id="main-products-grid">
+              <!-- Карточки генерируются из JS -->
+            </div>
+
+            <!-- Сообщение "Ничего не найдено" -->
+            <div class="empty-results-box" id="empty-catalog-box" style="display: none;">
+              <div class="empty-results-box__icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <h3 class="empty-results-box__title">Ничего не нашлось</h3>
+              <p class="empty-results-box__text">Попробуйте изменить параметры фильтрации или поисковый запрос</p>
+              <button class="btn btn-primary" onclick="resetAllFilters()">Сбросить фильтры</button>
+            </div>
+
+            <!-- Кнопка «Показать еще» -->
+            <div class="load-more-container" id="load-more-container">
+              <button class="btn btn-secondary btn-lg load-more-btn" id="load-more-btn">
+                <span>Показать еще товары</span>
+                <i class="fa-solid fa-rotate-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: НОВИНКИ -->
+    <section class="section section--new" id="new-arrivals-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="section-badge section-badge--green"><i class="fa-solid fa-sparkles"></i> Свежее поступление</span>
+            <h2 class="section-title" data-i18n="new_arrivals">Новинки</h2>
+          </div>
+          <div class="section-header__right">
+            <button class="scroll-arrow-btn" onclick="scrollContainer('new-products-scroll', -1)">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="scroll-arrow-btn" onclick="scrollContainer('new-products-scroll', 1)">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="horizontal-scroll-container" id="new-products-scroll">
+          <div class="products-grid products-grid--carousel" id="new-products">
+            <!-- Заполняется из JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: ПРЕИМУЩЕСТВА UZUM MARKET -->
+    <section class="section section--advantages">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title" data-i18n="advantages_title">Почему выбирают Uzum Market?</h2>
+        </div>
+        <div class="advantages-grid">
+          <div class="advantage-card">
+            <div class="advantage-card__icon-box">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h3 class="advantage-card__title" data-i18n="adv_1_title">Доставка за 1 день</h3>
+            <p class="advantage-card__text" data-i18n="adv_1_desc">Быстро доставим заказ курьером до вашей двери или в удобный пункт выдачи.</p>
+          </div>
+
+          <div class="advantage-card">
+            <div class="advantage-card__icon-box">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h3 class="advantage-card__title" data-i18n="adv_2_title">Выгодная рассрочка</h3>
+            <p class="advantage-card__text" data-i18n="adv_2_desc">Uzum Nasiya до 12 месяцев без первоначального взноса и скрытых комиссий.</p>
+          </div>
+
+          <div class="advantage-card">
+            <div class="advantage-card__icon-box">
+              <i class="fa-solid fa-store"></i>
+            </div>
+            <h3 class="advantage-card__title" data-i18n="adv_3_title">100+ пунктов выдачи</h3>
+            <p class="advantage-card__text" data-i18n="adv_3_desc">Удобные примерочные кабинки и быстрый бесплатный возврат в течение 10 дней.</p>
+          </div>
+
+          <div class="advantage-card">
+            <div class="advantage-card__icon-box">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="advantage-card__title" data-i18n="adv_4_title">Широкий ассортимент</h3>
+            <p class="advantage-card__text" data-i18n="adv_4_desc">Миллионы проверенных оригинальных товаров с честными отзывами покупателей.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: ЭКОСИСТЕМА UZUM -->
+    <section class="section section--ecosystem">
+      <div class="container">
+        <div class="ecosystem-banner">
+          <div class="ecosystem-banner__left">
+            <span class="ecosystem-badge">Экосистема Uzum</span>
+            <h2 class="ecosystem-banner__title">Всё самое необходимое в одном приложении</h2>
+            <p class="ecosystem-banner__desc">Uzum Market, Uzum Bank, сервис мгновенной доставки еды Uzum Tezkor и рассрочка Uzum Nasiya объединены для вашего максимального комфорта.</p>
+            <div class="ecosystem-services">
+              <div class="eco-service-pill"><i class="fa-solid fa-bag-shopping"></i> Uzum Market</div>
+              <div class="eco-service-pill"><i class="fa-solid fa-building-columns"></i> Uzum Bank</div>
+              <div class="eco-service-pill"><i class="fa-solid fa-motorcycle"></i> Uzum Tezkor</div>
+              <div class="eco-service-pill"><i class="fa-solid fa-percent"></i> Uzum Nasiya</div>
+            </div>
+          </div>
+          <div class="ecosystem-banner__right">
+            <div class="app-download-box">
+              <div class="app-download-box__title">Скачивайте приложение</div>
+              <p class="app-download-box__text">Сканируйте QR-код или переходите в маркет для эксклюзивных скидок и бонусов</p>
+              <div class="app-buttons">
+                <a href="#" class="app-badge-btn" onclick="showToast('Открытие App Store'); return false;">
+                  <i class="fa-brands fa-apple"></i>
+                  <div class="app-badge-text">
+                    <small>Загрузите в</small>
+                    <strong>App Store</strong>
+                  </div>
+                </a>
+                <a href="#" class="app-badge-btn" onclick="showToast('Открытие Google Play'); return false;">
+                  <i class="fa-brands fa-google-play"></i>
+                  <div class="app-badge-text">
+                    <small>Доступно в</small>
+                    <strong>Google Play</strong>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== ПОДВАЛ САЙТА (FOOTER) ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Колонка 1: О нас -->
+        <div class="footer-col">
+          <h4 class="footer-col__title" data-i18n="footer_about">О компании</h4>
+          <ul class="footer-links">
+            <li><a href="#about" onclick="showToast('Раздел о нас'); return false;">О маркетплейсе</a></li>
+            <li><a href="#vacancies" onclick="showToast('Вакансии открыты'); return false;">Вакансии в Uzum</a></li>
+            <li><a href="#delivery-points" onclick="showToast('100+ пунктов по всему Узбекистану'); return false;">Пункты выдачи</a></li>
+            <li><a href="#press" onclick="showToast('Пресс-служба Uzum'); return false;">Пресс-служба</a></li>
+          </ul>
+        </div>
+
+        <!-- Колонка 2: Покупателям -->
+        <div class="footer-col">
+          <h4 class="footer-col__title" data-i18n="footer_buyers">Покупателям</h4>
+          <ul class="footer-links">
+            <li><a href="#faq" onclick="showToast('Служба помощи 24/7'); return false;">Вопросы и ответы</a></li>
+            <li><a href="#payment" onclick="showToast('Оплата: Humo, Uzcard, Visa, Наличные'); return false;">Способы оплаты</a></li>
+            <li><a href="#delivery" onclick="showToast('Доставка за 24 часа'); return false;">Доставка и выдача</a></li>
+            <li><a href="#returns" onclick="showToast('Возврат товара в течение 10 дней'); return false;">Возврат и гарантия</a></li>
+          </ul>
+        </div>
+
+        <!-- Колонка 3: Для бизнеса -->
+        <div class="footer-col">
+          <h4 class="footer-col__title" data-i18n="footer_business">Партнерам</h4>
+          <ul class="footer-links">
+            <li><a href="#seller" onclick="showToast('Станьте продавцом на Uzum Market!'); return false;">Продавайте на Uzum</a></li>
+            <li><a href="#seller-cabinet" onclick="showToast('Вход в кабинет продавца'); return false;">Кабинет продавца</a></li>
+            <li><a href="#open-point" onclick="showToast('Франшиза пунктов выдачи'); return false;">Открыть пункт выдачи</a></li>
+          </ul>
+        </div>
+
+        <!-- Колонка 4: Контакты и соцсети -->
+        <div class="footer-col">
+          <h4 class="footer-col__title" data-i18n="footer_contacts">Контакты</h4>
+          <div class="footer-contacts">
+            <span class="footer-support-label" data-i18n="support_phone">Служба заботы о клиентах:</span>
+            <a href="tel:+998787770707" class="footer-phone">+998 78 777-07-07</a>
+            <span class="footer-work-hours">Круглосуточно, без выходных</span>
+          </div>
+          <div class="footer-socials">
+            <a href="https://t.me/uzum_market" target="_blank" class="social-link" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom__left">
+          <p class="copyright-text" data-i18n="all_rights">2026 © ООО «UZUM MARKET». Все права защищены. Демо-версия маркетплейса.</p>
+        </div>
+        <div class="footer-bottom__payments">
+          <span class="payment-badge"><i class="fa-solid fa-credit-card"></i> Uzcard</span>
+          <span class="payment-badge"><i class="fa-solid fa-credit-card"></i> HUMO</span>
+          <span class="payment-badge"><i class="fa-brands fa-cc-visa"></i> Visa</span>
+          <span class="payment-badge"><i class="fa-brands fa-cc-mastercard"></i> MasterCard</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== БОКОВАЯ КОРЗИНА (CART DRAWER) ==================== -->
+  <div class="drawer-backdrop" id="cart-drawer-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer__header">
+      <div class="cart-drawer__title-wrap">
+        <h3 class="cart-drawer__title">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span data-i18n="cart">Корзина</span>
+        </h3>
+        <span class="cart-drawer__count-tag" id="drawer-items-count">0 шт</span>
+      </div>
+      <button class="drawer-close-btn" id="cart-drawer-close-btn" title="Закрыть">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Индикатор бесплатной доставки -->
+    <div class="free-delivery-tracker" id="free-delivery-tracker">
+      <div class="free-delivery-tracker__text" id="free-delivery-text">
+        <i class="fa-solid fa-truck-ramp-box"></i>
+        <span>До бесплатной доставки курьером осталось: <strong>150 000 сум</strong></span>
+      </div>
+      <div class="free-delivery-tracker__bar">
+        <div class="free-delivery-tracker__progress" id="free-delivery-progress" style="width: 40%;"></div>
+      </div>
+    </div>
+
+    <!-- Список товаров в корзине -->
+    <div class="cart-drawer__body" id="cart-drawer-items">
+      <!-- Генерируется из JS -->
+    </div>
+
+    <!-- Пустая корзина -->
+    <div class="cart-drawer__empty" id="cart-drawer-empty" style="display: none;">
+      <div class="empty-cart-illustration">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </div>
+      <h4 class="empty-cart-title" data-i18n="empty_cart">В корзине пока пусто</h4>
+      <p class="empty-cart-desc" data-i18n="empty_cart_desc">Начните с подборок на главной странице или найдите нужный товар через поиск</p>
+      <button class="btn btn-primary" onclick="closeCartDrawer(); scrollToCatalog();" data-i18n="go_shopping">К покупкам</button>
+    </div>
+
+    <!-- Подвал корзины с расчетом и промокодом -->
+    <div class="cart-drawer__footer" id="cart-drawer-footer">
+      <!-- Промокод -->
+      <div class="cart-promo-box">
+        <div class="promo-input-row">
+          <input type="text" id="cart-promo-input" placeholder="Промокод (введите UZUM10)" uppercase>
+          <button class="btn btn-secondary btn-sm" id="apply-promo-btn">Применить</button>
+        </div>
+        <div class="promo-message" id="promo-message"></div>
+      </div>
+
+      <!-- Итоги -->
+      <div class="cart-summary-table">
+        <div class="cart-summary-row">
+          <span class="summary-label">Стоимость товаров:</span>
+          <span class="summary-value" id="cart-subtotal-price">0 сум</span>
+        </div>
+        <div class="cart-summary-row text-discount" id="cart-discount-row" style="display: none;">
+          <span class="summary-label">Скидка по промокоду:</span>
+          <span class="summary-value" id="cart-discount-value">-0 сум</span>
+        </div>
+        <div class="cart-summary-row">
+          <span class="summary-label">Доставка:</span>
+          <span class="summary-value text-green" id="cart-delivery-cost" data-i18n="free_delivery">Бесплатно</span>
+        </div>
+        <div class="cart-summary-divider"></div>
+        <div class="cart-summary-row cart-summary-row--total">
+          <span class="total-label" data-i18n="total_amount">Итого к оплате:</span>
+          <span class="total-value" id="cart-total-price">0 сум</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg checkout-trigger-btn" id="start-checkout-btn">
+        <span data-i18n="checkout_title">Оформить заказ</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: ИЗБРАННОЕ ==================== -->
+  <div class="modal-backdrop" id="favorites-modal-backdrop"></div>
+  <div class="modal-window modal-window--lg" id="favorites-modal">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <i class="fa-solid fa-heart modal-icon text-purple"></i>
+        <h3 class="modal-title" data-i18n="favorites">Мое избранное</h3>
+        <span class="items-count-pill" id="fav-items-count-pill">0</span>
+      </div>
+      <button class="modal-close-btn" id="favorites-modal-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="favorites-modal-body">
+      <!-- Сетка избранных товаров -->
+    </div>
+  </div>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: ДЕТАЛИ ТОВАРА ==================== -->
+  <div class="modal-backdrop" id="product-detail-backdrop"></div>
+  <div class="modal-window modal-window--xl" id="product-detail-modal">
+    <button class="modal-close-btn product-detail-close" id="product-detail-close-btn">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="modal-body product-detail-layout" id="product-detail-content">
+      <!-- Наполняется динамически через JS -->
+    </div>
+  </div>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: ОФОРМЛЕНИЕ ЗАКАЗА ==================== -->
+  <div class="modal-backdrop" id="checkout-modal-backdrop"></div>
+  <div class="modal-window modal-window--checkout" id="checkout-modal">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <i class="fa-solid fa-bag-shopping modal-icon text-purple"></i>
+        <h3 class="modal-title" data-i18n="checkout_title">Оформление заказа</h3>
+      </div>
+      <button class="modal-close-btn" id="checkout-modal-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body checkout-layout">
+      <!-- Форма оформления -->
+      <form class="checkout-form" id="checkout-form" onsubmit="event.preventDefault();">
+        
+        <!-- Секция 1: Данные получателя -->
+        <div class="checkout-step-box">
+          <div class="checkout-step-title">
+            <span class="step-num">1</span>
+            <span data-i18n="customer_info">Данные получателя</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="checkout-name" class="form-label" data-i18n="full_name">Имя и Фамилия</label>
+              <input type="text" id="checkout-name" class="form-control" placeholder="Алишер Навои" required>
+            </div>
+            <div class="form-group">
+              <label for="checkout-phone" class="form-label" data-i18n="phone_number">Номер телефона</label>
+              <input type="tel" id="checkout-phone" class="form-control" placeholder="+998 90 123-45-67" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Секция 2: Способ доставки -->
+        <div class="checkout-step-box">
+          <div class="checkout-step-title">
+            <span class="step-num">2</span>
+            <span data-i18n="delivery_type">Способ получения</span>
+          </div>
+          <div class="delivery-options-grid">
+            <label class="delivery-option-card active">
+              <input type="radio" name="delivery-method" value="courier" checked>
+              <div class="delivery-option-card__inner">
+                <i class="fa-solid fa-truck-door"></i>
+                <div class="delivery-option-card__info">
+                  <strong data-i18n="courier_delivery">Доставка курьером до двери</strong>
+                  <small>Доставим завтра с 10:00 до 18:00 (Бесплатно)</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="delivery-option-card">
+              <input type="radio" name="delivery-method" value="pickup">
+              <div class="delivery-option-card__inner">
+                <i class="fa-solid fa-store"></i>
+                <div class="delivery-option-card__info">
+                  <strong data-i18n="pickup_point">Пункт выдачи Uzum</strong>
+                  <small>Бесплатное хранение 5 дней, примерочные кабинки</small>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Адрес доставки / Выбор ПВЗ -->
+          <div class="form-group" id="address-field-group" style="margin-top: 15px;">
+            <label for="checkout-address" class="form-label" data-i18n="delivery_address">Адрес доставки</label>
+            <input type="text" id="checkout-address" class="form-control" placeholder="г. Ташкент, ул. Амира Темура, д. 45, кв. 12" required>
+          </div>
+
+          <div class="form-group" id="pickup-field-group" style="margin-top: 15px; display: none;">
+            <label for="checkout-pickup-select" class="form-label" data-i18n="pickup_address">Выберите ближайший пункт выдачи</label>
+            <select id="checkout-pickup-select" class="form-control">
+              <option value="pvz1">ПВЗ №101 — г. Ташкент, пр. Амира Темура, 25 (м. Амир Темур)</option>
+              <option value="pvz2">ПВЗ №102 — г. Ташкент, ул. Чиланзар, 14 (м. Чиланзар)</option>
+              <option value="pvz3">ПВЗ №103 — г. Ташкент, ул. Шота Руставели, 52</option>
+              <option value="pvz4">ПВЗ №104 — г. Ташкент, Юнусабад 13 кв-л, ТЦ Megaplanet</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Секция 3: Способ оплаты -->
+        <div class="checkout-step-box">
+          <div class="checkout-step-title">
+            <span class="step-num">3</span>
+            <span data-i18n="payment_method">Способ оплаты</span>
+          </div>
+          <div class="payment-methods-list">
+            <label class="payment-method-item active">
+              <input type="radio" name="payment-method" value="cash" checked>
+              <div class="payment-method-item__info">
+                <i class="fa-solid fa-money-bill-wave text-purple"></i>
+                <div>
+                  <strong data-i18n="pay_cash">При получении (наличными или картой)</strong>
+                  <small>Оплата курьеру или на кассе пункта выдачи</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="payment-method-item">
+              <input type="radio" name="payment-method" value="card">
+              <div class="payment-method-item__info">
+                <i class="fa-solid fa-credit-card text-purple"></i>
+                <div>
+                  <strong data-i18n="pay_card">Онлайн картой Uzcard / HUMO / Visa</strong>
+                  <small>Мгновенная оплата без комиссии</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="payment-method-item">
+              <input type="radio" name="payment-method" value="nasiya">
+              <div class="payment-method-item__info">
+                <i class="fa-solid fa-clock-rotate-left text-purple"></i>
+                <div>
+                  <strong data-i18n="pay_installment">В рассрочку Uzum Nasiya (до 12 мес)</strong>
+                  <small>0% первоначальный взнос, оформление онлайн</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Итог и кнопка оформления -->
+        <div class="checkout-review-box">
+          <div class="checkout-review-row">
+            <span>Сумма к оплате:</span>
+            <strong class="checkout-final-sum" id="checkout-final-sum">0 сум</strong>
+          </div>
+          <p class="checkout-notice">Нажимая кнопку, вы подтверждаете согласие с условиями использования демонстрационного сервиса Uzum Market.</p>
+          <button type="button" class="btn btn-primary btn-block btn-lg" id="submit-order-btn">
+            <i class="fa-solid fa-check"></i>
+            <span data-i18n="confirm_order">Подтвердить заказ</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: ЗАКАЗ УСПЕШНО ОФОРМЛЕН ==================== -->
+  <div class="modal-backdrop" id="order-success-backdrop"></div>
+  <div class="modal-window modal-window--success" id="order-success-modal">
+    <div class="order-success-content text-center">
+      <div class="success-icon-animation">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="success-title" data-i18n="order_success_title">Заказ успешно оформлен!</h3>
+      <p class="success-subtitle" data-i18n="order_success_desc">Спасибо за покупку! Мы уже готовим заказ к отправке.</p>
+      
+      <div class="order-receipt-card">
+        <div class="receipt-row">
+          <span data-i18n="order_number">Номер заказа:</span>
+          <strong id="receipt-order-id">UZ-84912</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Сумма:</span>
+          <strong id="receipt-order-sum">0 сум</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Получатель:</span>
+          <span id="receipt-customer-name">Алишер Навои</span>
+        </div>
+        <div class="receipt-row">
+          <span>Способ доставки:</span>
+          <span id="receipt-delivery-type">Курьерская доставка</span>
+        </div>
+        <div class="receipt-status-badge">
+          <i class="fa-solid fa-truck-fast"></i>
+          <span data-i18n="delivery_time_text">Ориентировочное время доставки: завтра с 10:00 до 18:00</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg" id="close-success-modal-btn">
+        <span data-i18n="go_shopping">Продолжить покупки</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: ВЫБОР ГОРОДА ==================== -->
+  <div class="modal-backdrop" id="city-modal-backdrop"></div>
+  <div class="modal-window modal-window--sm" id="city-modal">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fa-solid fa-location-dot text-purple"></i>
+        <span>Выберите ваш город</span>
+      </h3>
+      <button class="modal-close-btn" id="city-modal-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="city-search-box">
+        <input type="text" id="city-search-input" placeholder="Поиск города..." class="form-control">
+      </div>
+      <div class="cities-list" id="cities-modal-list">
+        <!-- Список городов из CITIES_DATA -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО: АВТОРИЗАЦИЯ ==================== -->
+  <div class="modal-backdrop" id="auth-modal-backdrop"></div>
+  <div class="modal-window modal-window--sm" id="auth-modal">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fa-regular fa-user text-purple"></i>
+        <span>Вход в Uzum ID</span>
+      </h3>
+      <button class="modal-close-btn" id="auth-modal-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body auth-modal-body">
+      <div class="auth-intro">
+        <p>Введите ваш номер телефона для входа или быстрой регистрации в маркетплейсе</p>
+      </div>
+
+      <div class="auth-step" id="auth-step-phone">
+        <div class="form-group">
+          <label class="form-label" data-i18n="phone_number">Номер телефона</label>
+          <div class="phone-input-wrap">
+            <span class="phone-country-code">+998</span>
+            <input type="tel" id="auth-phone-input" class="form-control" placeholder="90 123 45 67" maxlength="9">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" id="auth-send-code-btn">Получить SMS код</button>
+      </div>
+
+      <div class="auth-step" id="auth-step-code" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">Код из SMS (введите любые 4 цифры):</label>
+          <input type="text" id="auth-code-input" class="form-control text-center" placeholder="• • • •" maxlength="4" style="letter-spacing: 6px; font-size: 20px;">
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" id="auth-verify-code-btn">Войти</button>
+        <button class="btn btn-secondary btn-block btn-sm" id="auth-back-to-phone-btn" style="margin-top: 10px;">Изменить номер</button>
+      </div>
+
+      <div class="auth-step" id="auth-step-logged" style="display: none;">
+        <div class="auth-user-card text-center">
+          <div class="auth-avatar">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <h4 id="auth-user-name">Пользователь Uzum</h4>
+          <p id="auth-user-phone">+998 90 *** ** 67</p>
+          <button class="btn btn-secondary btn-block" id="auth-logout-btn">Выйти из аккаунта</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== КНОПКА «НАВЕРХ» ==================== -->
+  <button class="scroll-to-top-btn" id="scroll-to-top-btn" title="Наверх">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ==================== МОБИЛЬНАЯ НИЖНЯЯ НАВИГАЦИЯ ==================== -->
+  <nav class="mobile-bottom-nav">
+    <a href="#" class="mobile-nav-item active" id="mob-nav-home">
+      <i class="fa-solid fa-house"></i>
+      <span>Главная</span>
+    </a>
+    <button class="mobile-nav-item" id="mob-nav-catalog">
+      <i class="fa-solid fa-list-ul"></i>
+      <span data-i18n="catalog">Каталог</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-cart">
+      <div class="mobile-nav-icon-wrap">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="action-badge" id="mob-cart-badge">0</span>
+      </div>
+      <span data-i18n="cart">Корзина</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-fav">
+      <div class="mobile-nav-icon-wrap">
+        <i class="fa-regular fa-heart"></i>
+        <span class="action-badge" id="mob-fav-badge">0</span>
+      </div>
+      <span data-i18n="favorites">Избранное</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-profile">
+      <i class="fa-regular fa-user"></i>
+      <span data-i18n="login">Профиль</span>
+    </button>
+  </nav>
+
+  <!-- ==================== TOAST УВЕДОМЛЕНИЯ ==================== -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Подключение скриптов -->
+  <script src="products.js"></script>
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
